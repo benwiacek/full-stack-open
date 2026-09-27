@@ -4,13 +4,15 @@ import PersonList from './components/PersonList'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import numberService from './services/numberService'
-
+import Notification from './components/Notification'
 
 const App = () => {
 	const [persons, setPersons] = useState([])
 	const [newName, setNewName] = useState('')
 	const [newNumber, setNewNumber] = useState('')
 	const [filter, setFilter] = useState('')
+	const [message, setMessage] = useState(null)
+	const [msgClass, setMsgClass] = useState(null)
 
 	useEffect(() => {
 	 numberService
@@ -30,13 +32,23 @@ const App = () => {
 		if (!foundContact) {
 			numberService
 				.create(personObj)
-				.then(res => setPersons(persons.concat(res.data)))
+				.then(res =>  {
+					setPersons(persons.concat(res.data))
+					setMessage(`${res.data.name} was added to the phonebook.`)
+					setMsgClass('success')
+					setTimeout( () => setMessage(null), 5000)
+				})
 		} else if(foundContact.number === newNumber) {
 			alert(`${newName} has already been added to the phonebook`)
 		} else if (window.confirm(`${newName} already exists in the phone book, do you want to replace the old number with a new one?`)) {
 			numberService
 				.update(foundContact.id, personObj)
-				.then(res => setPersons(persons.map(person => person.id === foundContact.id ? res.data : person)))
+				.then(res => {
+					setPersons(persons.map(person => person.id === foundContact.id ? res.data : person))
+					setMessage(`${res.data.name}'s number was successfully updated.`)
+					setMsgClass('success')
+					setTimeout( () => setMessage(null), 5000)
+				})
 		}
 		setNewName('')
 		setNewNumber('')
@@ -59,7 +71,12 @@ const App = () => {
 		if (window.confirm(`Are you sure you want to delete ${personToDelete.name} ?`)) {
 			numberService
 				.remove(id)
-				.then( res => setPersons(persons.filter(person => person.id !== res.data.id)))
+				.then( res => {
+					setPersons(persons.filter(person => person.id !== res.data.id))
+					setMessage(`${res.data.name} was successfully deleted from the phonebook.`)
+					setMsgClass('success')
+					setTimeout( () => setMessage(null), 5000)
+				})
 		}
 	}
 
@@ -72,6 +89,10 @@ const App = () => {
 	return (
 		<div>
 			<h2>Phonebook</h2>
+			<Notification 
+				message={message}
+				msgClass={msgClass}
+			/>
 			<Filter 
 				filter={filter}
 				handleFilter={handleFilter}

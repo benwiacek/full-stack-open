@@ -21,14 +21,9 @@
       "id": "4"
     },
     {
-      "name": "Ben W",
-      "number": "123-456-7890",
-      "id": "WqxcnxR_QHo"
-    },
-    {
       "name": "Ben",
-      "number": "123123",
-      "id": "XrYu913F0Kw"
+      "number": "123-456-7890",
+      "id": "TtJiGQUBysM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
