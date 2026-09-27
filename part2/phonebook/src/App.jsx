@@ -21,8 +21,8 @@ const App = () => {
 	const addPerson = (event) => {
 		event.preventDefault()
 		const personObj = {
-		name: newName,
-		number: newNumber
+			name: newName,
+			number: newNumber
 		}
 
 		if(persons.some(person => person.name === newName)) {
@@ -46,6 +46,15 @@ const App = () => {
 
 	const handleFilter = (event) => {
 		setFilter(event.target.value)
+	}
+
+	const deletePerson = id => {
+		const personToDelete = persons.find(p => p.id === id)
+		if (window.confirm(`Are you sure you want to delete ${personToDelete.name} ?`)) {
+			numberService
+				.remove(id)
+				.then( res => setPersons(persons.filter(person => person.id !== res.data.id)))
+		}
 	}
 
 	const personsToShow = filter 
@@ -72,7 +81,10 @@ const App = () => {
 			/>
 
 			<h3>Numbers</h3>
-			<PersonList personsToShow={personsToShow} />
+			<PersonList 
+				personsToShow={personsToShow}
+				deletePerson={deletePerson} 
+			/>
 		</div>
 	)
 }
