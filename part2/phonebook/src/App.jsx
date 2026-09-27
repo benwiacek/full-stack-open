@@ -18,6 +18,12 @@ const App = () => {
 	 numberService
 		.get()
 		.then(res => setPersons(res.data))
+		.catch(error => {
+			setMessage(`There was an error in getting the names from the phonebook.`)
+			setMsgClass('error')
+			setTimeout( () => setMessage(null), 5000)
+		})
+		
 	}, []) 
 
 	const addPerson = (event) => {
