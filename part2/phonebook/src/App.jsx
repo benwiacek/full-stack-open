@@ -38,6 +38,12 @@ const App = () => {
 					setMsgClass('success')
 					setTimeout( () => setMessage(null), 5000)
 				})
+				.catch(error => {
+					setMessage(`There was an error in adding ${newName} to the phonebook.`)
+					setMsgClass('error')
+					setTimeout( () => setMessage(null), 5000)
+				})
+				
 		} else if(foundContact.number === newNumber) {
 			alert(`${newName} has already been added to the phonebook`)
 		} else if (window.confirm(`${newName} already exists in the phone book, do you want to replace the old number with a new one?`)) {
@@ -47,6 +53,11 @@ const App = () => {
 					setPersons(persons.map(person => person.id === foundContact.id ? res.data : person))
 					setMessage(`${res.data.name}'s number was successfully updated.`)
 					setMsgClass('success')
+					setTimeout( () => setMessage(null), 5000)
+				})
+				.catch(error => {
+					setMessage(`${newName}'s number couldn't be updated because it has been removed from the server.`)
+					setMsgClass('error')
 					setTimeout( () => setMessage(null), 5000)
 				})
 		}
@@ -75,6 +86,11 @@ const App = () => {
 					setPersons(persons.filter(person => person.id !== res.data.id))
 					setMessage(`${res.data.name} was successfully deleted from the phonebook.`)
 					setMsgClass('success')
+					setTimeout( () => setMessage(null), 5000)
+				})
+				.catch(error => {
+					setMessage(`${personToDelete.name}'s number has already been deleted from the server.`)
+					setMsgClass('error')
 					setTimeout( () => setMessage(null), 5000)
 				})
 		}
