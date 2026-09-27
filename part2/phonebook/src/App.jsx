@@ -14,7 +14,7 @@ const App = () => {
 
 	useEffect(() => {
 	 numberService
-		.getAll()
+		.get()
 		.then(res => setPersons(res.data))
 	}, []) 
 
@@ -25,12 +25,18 @@ const App = () => {
 			number: newNumber
 		}
 
-		if(persons.some(person => person.name === newName)) {
-		alert(`${newName} has already been added to the phonebook`)
-		} else {
-		numberService
-			.create(personObj)
-			.then(res => setPersons(persons.concat(res.data)))
+		const foundContact = persons.find(person => person.name === newName)
+
+		if (!foundContact) {
+			numberService
+				.create(personObj)
+				.then(res => setPersons(persons.concat(res.data)))
+		} else if(foundContact.number === newNumber) {
+			alert(`${newName} has already been added to the phonebook`)
+		} else if (window.confirm(`${newName} already exists in the phone book, do you want to replace the old number with a new one?`)) {
+			numberService
+				.update(foundContact.id, personObj)
+				.then(res => setPersons(persons.map(person => person.id === foundContact.id ? res.data : person)))
 		}
 		setNewName('')
 		setNewNumber('')
