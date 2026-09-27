@@ -21,14 +21,9 @@
       "id": "4"
     },
     {
-      "name": "Ben",
-      "number": "123123",
-      "id": "uoJUrt9zpw8"
-    },
-    {
-      "name": "Benji",
-      "number": "564649",
-      "id": "H7baVHsUfmU"
+      "name": "Ben Wiacek",
+      "number": "123-456-7890",
+      "id": "WPv0uIvJ5Jc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
