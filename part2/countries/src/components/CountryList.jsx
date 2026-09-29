@@ -1,17 +1,13 @@
-import Country from "./Country"
-
-const CountryList = ({ countriesToShow }) => {
-    if (countriesToShow.length >1) {
-        return (
-            <div>
-                {countriesToShow.map(country => <div key={country.name.common} >{country.name.common}</div>)}
-            </div>
-        )
-    }
-    console.log('single country to watch', countriesToShow)
+const CountryList = ({ countriesToShow, showCountry }) => {
     return (
         <div>
-            <Country singleCountry={countriesToShow} />
+            {countriesToShow.map(country => {
+                return (
+                    <div key={country.name.common} >
+                        {country.name.common} <button onClick={() => showCountry(country)}>Show</button>
+                    </div>
+                )
+            })}
         </div>
     )
 }
