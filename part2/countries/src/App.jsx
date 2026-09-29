@@ -33,7 +33,7 @@ function App() {
 	}
 	
 	console.log(filteredCountries)
-	console.log(instruction)
+	console.log(instruction())
 
 	const toDisplay = instruction()
 		? <div className="instruction">{instruction()}</div>
