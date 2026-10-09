@@ -51,5 +51,12 @@ app.get('/info', (req, res) => {
     res.send(statusText)
 })
 
+app.delete('/api/persons/:id', (req, res) => {
+    const id = req.params.id
+    persons = persons.filter(person => person.id !== id)
+
+    res.status(204).end()
+})
+
 app.listen(PORT)
 console.log(`Server is running on port ${PORT}`)
