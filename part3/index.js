@@ -3,6 +3,8 @@ const app = express()
 
 const PORT = 3001
 
+app.use(express.json())
+
 let persons = [
     {
         id: '1',
@@ -37,7 +39,6 @@ app.get('/api/persons/:id', (req, res) => {
     if(!person) {
         res.status(404).end()
     } else {
-        console.log(person)
         res.json(person)
     }
 })
@@ -47,7 +48,7 @@ app.get('/info', (req, res) => {
         Phonebook has info for ${persons.length} people. <br /><br />
         ${(new Date()).toString()}
     `
-    console.log(statusText)
+
     res.send(statusText)
 })
 
@@ -56,6 +57,16 @@ app.delete('/api/persons/:id', (req, res) => {
     persons = persons.filter(person => person.id !== id)
 
     res.status(204).end()
+})
+
+app.post('/api/persons', (req, res) => {
+        const person = {
+            id: (Math.floor(Math.random()*10000)).toString(),
+            ...req.body
+        }
+        console.log(person)
+        persons = persons.concat(person)
+        res.json(persons)
 })
 
 app.listen(PORT)
