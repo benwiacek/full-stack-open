@@ -1,0 +1,25 @@
+{
+  "name": "part3",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/benwiacek/full-stack-open#readme",
+  "bugs": {
+    "url": "https://github.com/benwiacek/full-stack-open/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benwiacek/full-stack-open.git"
+  },
+  "license": "ISC",
+  "author": "Ben Wiacek",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
