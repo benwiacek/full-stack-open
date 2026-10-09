@@ -60,13 +60,30 @@ app.delete('/api/persons/:id', (req, res) => {
 })
 
 app.post('/api/persons', (req, res) => {
-        const person = {
-            id: (Math.floor(Math.random()*10000)).toString(),
-            ...req.body
-        }
-        console.log(person)
-        persons = persons.concat(person)
-        res.json(persons)
+    const { name, number } = req.body
+
+    if(!name) {
+        return res.status(400).json({error: 'The name is missing'})
+    }
+
+    if(!number) {
+        return res.status(400).json({error: 'The number is missing'})
+    }
+
+    const filter = persons.find(p => p.name === name)
+
+    if(filter) {
+        return res.status(400).json({error: 'There is already a contact with this name.'})
+    }
+
+    const person = {
+        id: (Math.floor(Math.random()*10000)).toString(),
+        name,
+        number
+    }
+    console.log(person)
+    persons = persons.concat(person)
+    res.json(persons)
 })
 
 app.listen(PORT)
