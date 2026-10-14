@@ -89,7 +89,7 @@ app.post('/api/persons', (req, res) => {
         number
     }
     persons = persons.concat(person)
-    res.json(persons)
+    res.status(201).json(person)
 })
 
 app.listen(PORT)
