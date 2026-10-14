@@ -1,10 +1,12 @@
-GET http://localhost:3001/api/persons
+@baseUrl = https://full-stack-open-4kxh.onrender.com/api/persons
+
+GET {{baseUrl}}
 
 ###
-DELETE http://localhost:3001/api/persons/3
+DELETE {{baseUrl}}/1980
 
 ###
-POST http://localhost:3001/api/persons
+POST {{baseUrl}}
 Content-Type: application/json
 
 {
