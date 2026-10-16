@@ -53,27 +53,28 @@ app.delete('/api/persons/:id', (req, res) => {
 app.post('/api/persons', (req, res) => {
     const { name, number } = req.body
 
-    if(!name) {
-        return res.status(400).json({error: 'The name is missing'})
-    }
+    // if(!name) {
+    //     return res.status(400).json({error: 'The name is missing'})
+    // }
 
-    if(!number) {
-        return res.status(400).json({error: 'The number is missing'})
-    }
+    // if(!number) {
+    //     return res.status(400).json({error: 'The number is missing'})
+    // }
 
-    const filter = persons.find(p => p.name === name)
+    // const filter = persons.find(p => p.name === name)
 
-    if(filter) {
-        return res.status(400).json({error: 'There is already a contact with this name.'})
-    }
+    // if(filter) {
+    //     return res.status(400).json({error: 'There is already a contact with ggggggggggggggggggggg this name.'})
+    // }
 
-    const person = {
-        id: (Math.floor(Math.random()*10000)).toString(),
+    const person = new Person({
         name,
         number
-    }
-    persons = persons.concat(person)
-    res.status(201).json(person)
+    })
+
+    person.save().then(savedPerson => {
+        res.status(201).json(savedPerson)
+    })
 })
 
 const PORT = process.env.PORT
