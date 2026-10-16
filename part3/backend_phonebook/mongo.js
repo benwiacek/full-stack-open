@@ -23,12 +23,10 @@ const person = new Person({
     number,
 })
 
-console.log(process.argv.length)
-
 if (process.argv.length < 3) {
     console.log('give password as argument')
     process.exit(1)
-    
+
 } else if(process.argv.length === 3) {
     console.log('Phonebook:')
     Person.find({}).then(result => {
