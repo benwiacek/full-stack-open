@@ -62,11 +62,12 @@ app.post('/api/persons', (req, res) => {
         return res.status(400).json({error: 'The number is missing'})
     }
 
-    // const filter = persons.find(p => p.name === name)
-
-    // if(filter) {
-    //     return res.status(400).json({error: 'There is already a contact with ggggggggggggggggggggg this name.'})
-    // }
+    Person.find({ name })
+        .then(person => {
+            if(person) {
+                return res.status(400).json({error: 'This person already exists in the phonebook'})
+            }
+        })
 
     const person = new Person({
         name,
@@ -76,6 +77,28 @@ app.post('/api/persons', (req, res) => {
     person.save().then(savedPerson => {
         res.status(201).json(savedPerson)
     })
+})
+
+app.put('/api/persons/:id', (req, res, next) => {
+    const { name, number } = req.body
+
+    if(!number) {
+        return res.status(400).json({error: 'The number is missing'})
+    }
+
+    Person.findById(req.params.id)
+        .then(person => {
+            if(!person) {
+                return res.status(404).end()
+            }
+
+            person.number = number
+            
+            return person.save().then(updatedPerson => {
+                res.status(200).json(updatedPerson)
+            })
+        })
+        .catch(error => next(error))
 })
 
 const unknownEndpoint = (req, res) => {

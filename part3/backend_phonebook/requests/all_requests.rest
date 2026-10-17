@@ -7,10 +7,21 @@ GET {{baseUrl}}
 DELETE {{baseUrl}}/6ad2efe804cf9e482f0aa048
 
 ###
+
 POST {{baseUrl}}
 Content-Type: application/json
 
 {
     "name": "Ben",
     "number": "123-456"
+}
+
+###
+
+PUT {{baseUrl}}/6ad3c1dad
+Content-Type: application/json
+
+{
+    "name": "Beny",
+    "number": ""
 }
