@@ -6,8 +6,8 @@ const Person = require('./models/person')
 
 const app = express()
 
-app.use(express.json())
 app.use(express.static('dist'))
+app.use(express.json())
 
 morgan.token('body', (req) => {
     return JSON.stringify(req.body)
@@ -54,13 +54,13 @@ app.delete('/api/persons/:id', (req, res, next) => {
 app.post('/api/persons', (req, res) => {
     const { name, number } = req.body
 
-    // if(!name) {
-    //     return res.status(400).json({error: 'The name is missing'})
-    // }
+    if(!name) {
+        return res.status(400).json({error: 'The name is missing'})
+    }
 
-    // if(!number) {
-    //     return res.status(400).json({error: 'The number is missing'})
-    // }
+    if(!number) {
+        return res.status(400).json({error: 'The number is missing'})
+    }
 
     // const filter = persons.find(p => p.name === name)
 
@@ -77,6 +77,24 @@ app.post('/api/persons', (req, res) => {
         res.status(201).json(savedPerson)
     })
 })
+
+const unknownEndpoint = (req, res) => {
+    res.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
+const errorHandler = (error, req, res, next) => {
+    console.error(error.message)
+
+    if(error.name === 'CastError') {
+        return res.status(400).send({error: 'malformated id' })
+    }
+
+    next(error)
+}
+
+app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT)

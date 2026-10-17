@@ -3,7 +3,8 @@
 GET {{baseUrl}}
 
 ###
-DELETE {{baseUrl}}/1980
+
+DELETE {{baseUrl}}/6ad2efe804cf9e482f0aa048
 
 ###
 POST {{baseUrl}}
