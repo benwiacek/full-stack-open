@@ -1,4 +1,4 @@
-@baseUrl = https://full-stack-open-4kxh.onrender.com/api/persons
+@baseUrl = http://localhost:3001/api/persons
 
 GET {{baseUrl}}
 
