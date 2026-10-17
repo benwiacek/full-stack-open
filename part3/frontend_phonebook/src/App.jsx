@@ -28,6 +28,14 @@ const App = () => {
 
 	const addPerson = (event) => {
 		event.preventDefault()
+
+		if(!newName) {
+			return alert(`The name is missing.`)
+		}
+		if(!newNumber) {
+			return alert(`The number is missing.`)
+		}
+
 		const personObj = {
 			name: newName,
 			number: newNumber
