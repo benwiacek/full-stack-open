@@ -4,7 +4,7 @@ GET {{baseUrl}}
 
 ###
 
-DELETE {{baseUrl}}/6ad2efe804cf9e482f0aa048
+DELETE {{baseUrl}}/6ad3fbbf2326a5aece7de79e
 
 ###
 
@@ -12,16 +12,16 @@ POST {{baseUrl}}
 Content-Type: application/json
 
 {
-    "name": "Ben",
-    "number": "123-456"
+    "name": "Lilia",
+    "number": "33333"
 }
 
 ###
 
-PUT {{baseUrl}}/6ad3c1dad
+PUT {{baseUrl}}/6ad3fd6ccd93411da4ee29bd
 Content-Type: application/json
 
 {
-    "name": "Beny",
-    "number": ""
+    "name": "Ben",
+    "number": 22222"
 }

@@ -63,24 +63,25 @@ app.post('/api/persons', (req, res) => {
     }
 
     Person.find({ name })
-        .then(person => {
-            if(person) {
+        .then(result => {
+            if(result.length > 0) {
                 return res.status(400).json({error: 'This person already exists in the phonebook'})
             }
+
+            const person = new Person({
+                name,
+                number
+            })
+        
+            person.save().then(savedPerson => {
+                res.status(201).json(savedPerson)
+            })
         })
 
-    const person = new Person({
-        name,
-        number
-    })
-
-    person.save().then(savedPerson => {
-        res.status(201).json(savedPerson)
-    })
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
-    const { name, number } = req.body
+    const { number } = req.body
 
     if(!number) {
         return res.status(400).json({error: 'The number is missing'})
