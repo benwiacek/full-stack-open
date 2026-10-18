@@ -4,6 +4,14 @@ GET {{baseUrl}}
 
 ###
 
+GET http://localhost:3001/info
+
+###
+
+GET {{baseUrl}}/6ad3fd6ccd93411da4ee29bd
+
+###
+
 DELETE {{baseUrl}}/6ad3fbbf2326a5aece7de79e
 
 ###

@@ -17,30 +17,35 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 
 let persons = []
 
-app.get('/api/persons', (req, res) => {
-    Person.find({}).then(persons => {
-        res.json(persons)
-    })
+app.get('/api/persons', (req, res, next) => {
+    Person.find({})
+        .then(persons => {
+            res.json(persons)
+        })
+        .catch(error => next(error))
 })
 
-app.get('/api/persons/:id', (req, res) => {
-    const id = req.params.id
-    const person = persons.find(person => person.id === id)
-
-    if(!person) {
-        res.status(404).end()
-    } else {
-        res.json(person)
-    }
+app.get('/api/persons/:id', (req, res, next) => {
+    Person.findById(req.params.id)
+        .then(result => {
+            if(!result) {
+                return res.status(404).send({ error: 'There is no person with this id.'})
+            }
+            res.json(result)
+        })
+        .catch(error => next(error))
 })
 
-app.get('/info', (req, res) => {
-    const statusText = `
-        Phonebook has info for ${persons.length} people. <br /><br />
-        ${(new Date()).toString()}
-    `
-
-    res.send(statusText)
+app.get('/info', (req, res, next) => {
+    Person.find({})
+        .then(result => {
+            const statusText = `
+                Phonebook has info for ${result.length} people. <br /><br />
+                ${(new Date()).toString()}
+            `
+            res.send(statusText)
+        })
+        .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
@@ -51,7 +56,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
         .catch(error => next(error))
 })
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
     const { name, number } = req.body
 
     if(!name) {
@@ -77,6 +82,7 @@ app.post('/api/persons', (req, res) => {
                 res.status(201).json(savedPerson)
             })
         })
+        .catch(error => next(error))
 
 })
 
