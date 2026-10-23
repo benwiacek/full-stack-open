@@ -29,7 +29,7 @@ app.get('/api/persons/:id', (req, res, next) => {
     Person.findById(req.params.id)
         .then(result => {
             if(!result) {
-                return res.status(404).send({ error: 'There is no person with this id.'})
+                return res.status(404).json({ error: 'There is no person with this id.'})
             }
             res.json(result)
         })
@@ -59,14 +59,6 @@ app.delete('/api/persons/:id', (req, res, next) => {
 app.post('/api/persons', (req, res, next) => {
     const { name, number } = req.body
 
-    if(!name) {
-        return res.status(400).json({error: 'The name is missing'})
-    }
-
-    if(!number) {
-        return res.status(400).json({error: 'The number is missing'})
-    }
-
     Person.find({ name })
         .then(result => {
             if(result.length > 0) {
@@ -78,9 +70,10 @@ app.post('/api/persons', (req, res, next) => {
                 number
             })
         
-            person.save().then(savedPerson => {
-                res.status(201).json(savedPerson)
-            })
+            return person.save()
+                .then(savedPerson => {
+                    res.status(201).json(savedPerson)
+                })
         })
         .catch(error => next(error))
 
@@ -88,10 +81,6 @@ app.post('/api/persons', (req, res, next) => {
 
 app.put('/api/persons/:id', (req, res, next) => {
     const { number } = req.body
-
-    if(!number) {
-        return res.status(400).json({error: 'The number is missing'})
-    }
 
     Person.findById(req.params.id)
         .then(person => {
@@ -101,15 +90,16 @@ app.put('/api/persons/:id', (req, res, next) => {
 
             person.number = number
             
-            return person.save().then(updatedPerson => {
-                res.status(200).json(updatedPerson)
-            })
+            return person.save()
+                .then(updatedPerson => {
+                    res.status(200).json(updatedPerson)
+                })
         })
         .catch(error => next(error))
 })
 
 const unknownEndpoint = (req, res) => {
-    res.status(404).send({ error: 'unknown endpoint' })
+    res.status(404).json({ error: 'unknown endpoint' })
 }
 
 app.use(unknownEndpoint)
@@ -118,7 +108,9 @@ const errorHandler = (error, req, res, next) => {
     console.error(error.message)
 
     if(error.name === 'CastError') {
-        return res.status(400).send({error: 'malformated id' })
+        return res.status(400).json({error: 'malformated id' })
+    } else if(error.name = 'ValidationError') {
+        return res.status(400).json({error: error.message})
     }
 
     next(error)

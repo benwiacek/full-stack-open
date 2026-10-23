@@ -53,7 +53,7 @@ const App = () => {
 					setTimeout( () => setMessage(null), 5000)
 				})
 				.catch(error => {
-					setMessage(`There was an error in adding ${newName} to the phonebook.`)
+					setMessage(`There was an error in adding ${newName} to the phonebook: ${error.response.data.error}`)
 					setMsgClass('error')
 					setTimeout( () => setMessage(null), 5000)
 				})
@@ -70,7 +70,7 @@ const App = () => {
 					setTimeout( () => setMessage(null), 5000)
 				})
 				.catch(error => {
-					setMessage(`${newName}'s number couldn't be updated because it has been removed from the server.`)
+					setMessage(`${newName}'s number couldn't be updated: ${error.response.data.error}`)
 					setMsgClass('error')
 					setTimeout( () => setMessage(null), 5000)
 				})

@@ -20,8 +20,8 @@ POST {{baseUrl}}
 Content-Type: application/json
 
 {
-    "name": "Lilia",
-    "number": "33333"
+    "name": "Jude",
+    "number": "55555"
 }
 
 ###
@@ -30,6 +30,6 @@ PUT {{baseUrl}}/6ad3fd6ccd93411da4ee29bd
 Content-Type: application/json
 
 {
-    "name": "Ben",
-    "number": 22222"
+    "name": "Jude",
+    "number": "4444"
 }
