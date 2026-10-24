@@ -26,6 +26,10 @@ My personal solutions and project submissions for the [Full Stack Open](https://
 * [Phonebook Frontend](./part2/phonebook)
 * [Data for Countries](./part2/countries)
 
+### [Part 3: Programming a server with NodeJS and Express](./part3)
+* [Phonebook Frontend](./part3/frontend_phonebook)
+* [Phonebook Backend](./part3/backend_phonebook)
+
 ---
 
-Currently working on Part 3: Programming a Server with NodeJS and Express
+Currently working on Part 4: Testing Express servers, user administration
