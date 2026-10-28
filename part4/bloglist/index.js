@@ -2,17 +2,9 @@ const express = require('express')
 const mongoose = require('mongoose')
 const logger = require('./utils/logger')
 const config = require('./utils/config')
+const Blog = require('./models/blog')
 
 const app = express()
-
-const blogSchema = mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
-  likes: Number,
-})
-
-const Blog = mongoose.model('Blog', blogSchema)
 
 mongoose
   .connect(config.mongoUri, { family: 4 })
