@@ -1,4 +1,4 @@
-const dummy = (blogs) => {
+const dummy = () => {
   return 1
 }
 
@@ -22,4 +22,28 @@ const favoriteBlog = (blogs) => {
   }
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog }
+const mostBlogs = (blogs) => {
+  if (blogs.length === 0) {
+    return {}
+  }
+
+  const authorList = {}
+
+  blogs.forEach(
+    (blog) => (authorList[blog.author] = (authorList[blog.author] ?? 0) + 1),
+  )
+
+  const authorsArray = Object.entries(authorList)
+  const bestAuthor = authorsArray.reduce(
+    ([mostName, mostCount], [authorName, authorCount]) => {
+      return authorCount > mostCount
+        ? [authorName, authorCount]
+        : [mostName, mostCount]
+    },
+    authorsArray[0],
+  )
+  const [author, blogCount] = bestAuthor
+  return { author, blogs: blogCount }
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }
