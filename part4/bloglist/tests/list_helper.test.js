@@ -141,3 +141,26 @@ describe('most prolific author', () => {
     })
   })
 })
+
+describe('most liked author', () => {
+  test('empty list returns empty object', () => {
+    const result = listHelper.mostLikes([])
+    assert.deepStrictEqual(result, {})
+  })
+
+  test('list with a single blog, return the author of that blog', () => {
+    const result = listHelper.mostLikes(listWithOneBlog)
+    assert.deepStrictEqual(result, {
+      author: 'Edsger W. Dijkstra',
+      likes: 5,
+    })
+  })
+
+  test('list of several blogs, returns the author with most likes', () => {
+    const result = listHelper.mostLikes(blogs)
+    assert.deepStrictEqual(result, {
+      author: 'Edsger W. Dijkstra',
+      likes: 17,
+    })
+  })
+})
