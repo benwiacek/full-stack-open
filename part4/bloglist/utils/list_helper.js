@@ -31,13 +31,11 @@ const mostBlogs = (blogs) => {
 
   const authorList = _.countBy(blogs, 'author')
 
-  const authorsArray = Object.entries(authorList)
-  const [authorName, blogCount] = _.maxBy(
-    authorsArray,
-    ([, authCount]) => authCount,
-  )
+  const authorsArray = _.map(authorList, (blogCount, author) => {
+    return { author, blogs: blogCount }
+  })
 
-  return { author: authorName, blogs: blogCount }
+  return _.maxBy(authorsArray, 'blogs')
 }
 
 const mostLikes = (blogs) => {
@@ -47,10 +45,10 @@ const mostLikes = (blogs) => {
 
   const groupedList = _.groupBy(blogs, 'author')
 
-  const newList = _.map(groupedList, (value, key) => {
+  const newList = _.map(groupedList, (authorBlogs, author) => {
     return {
-      author: key,
-      likes: _.sumBy(value, 'likes'),
+      author,
+      likes: _.sumBy(authorBlogs, 'likes'),
     }
   })
 
